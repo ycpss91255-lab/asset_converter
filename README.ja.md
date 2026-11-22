@@ -8,7 +8,7 @@ URDF + TOML から USD への変換ツール。公式 urdf-usd-converter を補�
 
 ## センサーシードコード
 
-ycpss91255-docker/isaac @ c068e3a から抽出。センサー作成コード（Camera / LiDAR / IMU USD prims）は、今後クリーンな API にリファクタリング予定。
+ycpss91255-lab/isaac @ c068e3a から抽出。センサー作成コード（Camera / LiDAR / IMU USD prims）は、今後クリーンな API にリファクタリング予定。
 
 詳細は [SOURCE.md](SOURCE.md) を参照（シードファイルの出典とレイヤー分割）。
 

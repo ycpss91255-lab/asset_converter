@@ -8,7 +8,7 @@ URDF + TOML 转 USD 转换工具。在官方 urdf-usd-converter 基础上补充�
 
 ## 传感器种子代码
 
-从 ycpss91255-docker/isaac @ c068e3a 提取。传感器创建代码（Camera / LiDAR / IMU USD prims）将在后续重构为干净的 API。
+从 ycpss91255-lab/isaac @ c068e3a 提取。传感器创建代码（Camera / LiDAR / IMU USD prims）将在后续重构为干净的 API。
 
 详见 [SOURCE.md](SOURCE.md) 了解种子文件的来源与 layer 切分。
 

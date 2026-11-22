@@ -1,6 +1,6 @@
 # Source
 
-Seed code extracted from ycpss91255-docker/isaac @ c068e3a.
+Seed code extracted from ycpss91255-lab/isaac @ c068e3a.
 
 | Seed file | Origin |
 |-----------|--------|
@@ -27,4 +27,4 @@ Only the sensor-prim-creation layer belongs in asset_converter:
 - _build_graph_topology, _enable_extensions (Kit extension management)
 
 Refactoring to separate these layers is the next step.
-See ycpss91255-docker/isaac#309 and asset_converter#1 for the design.
+See ycpss91255-lab/isaac#309 and asset_converter#1 for the design.
