@@ -12,7 +12,7 @@
 # abort for a consumer running the documented `set -euo pipefail`
 # entrypoint. Same shape the helpers themselves use for logrotate.sh.
 if [[ -r /usr/local/lib/base/logging.sh ]]; then
-  # shellcheck disable=SC1091
+  # shellcheck disable=SC1090,SC1091
   . /usr/local/lib/base/logging.sh
 fi
 # Generic single-service watchdog. No-op when [lifecycle]
@@ -20,7 +20,7 @@ fi
 # safe unconditionally. When ON_FAIL=restart-service the watchdog
 # supervises the service itself and this script does not reach `exec`.
 if [[ -r /usr/local/lib/base/watchdog.sh ]]; then
-  # shellcheck disable=SC1091
+  # shellcheck disable=SC1090,SC1091
   . /usr/local/lib/base/watchdog.sh
 fi
 

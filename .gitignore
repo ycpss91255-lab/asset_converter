@@ -10,3 +10,10 @@ coverage/
 .docker.xauth
 log/
 /deploy/
+.env.local
+.env.local.toml
+.env.local.bak
+env.local.toml
+setup.toml.bak
+.setup.conf.local.bak
+setup.local.toml
