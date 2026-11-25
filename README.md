@@ -8,7 +8,7 @@ Early stage. Contains design (issue #1) and sensor seed code from the isaac repo
 
 ## Sensor seed code
 
-Extracted from ycpss91255-docker/isaac @ c068e3a. The sensor creation code (Camera / LiDAR / IMU USD prims) will be refactored into a clean API.
+Extracted from ycpss91255-lab/isaac @ c068e3a. The sensor creation code (Camera / LiDAR / IMU USD prims) will be refactored into a clean API.
 
 See [SOURCE.md](SOURCE.md) for seed file provenance and layer split.
 
