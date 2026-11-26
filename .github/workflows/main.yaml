@@ -23,10 +23,6 @@ jobs:
       image_name: asset_converter
       # CLI tool, no runtime image: the Dockerfile has no runtime stage.
       build_runtime: false
-      # base v0.42.0: the Dockerfile has no default for TEST_TOOLS_IMAGE, but
-      # build-worker's "Build devel stage" step does not pass it, so BuildKit
-      # fails on the empty `FROM ${TEST_TOOLS_IMAGE}`. Pass it explicitly.
-      build_args: TEST_TOOLS_IMAGE=ghcr.io/ycpss91255-lab/test-tools:latest
 
   call-release:
     needs: call-docker-build
