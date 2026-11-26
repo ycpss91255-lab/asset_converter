@@ -12,6 +12,8 @@ ycpss91255-lab/isaac @ c068e3a から抽出。センサー作成コード（Came
 
 詳細は [SOURCE.md](SOURCE.md) を参照（シードファイルの出典とレイヤー分割）。
 
+シードコードの検証ロジックは `devel-test` の pytest（`test/pytest/unit/test_sensor_validation.py`）でカバーされ、`seed/` に構文エラーがあるとビルドが失敗します。Isaac Sim が必要な部分（`setup_sensor` など）は参考コードであり、機能テストの対象外です。
+
 ## ライセンス
 
 [Apache-2.0](LICENSE)

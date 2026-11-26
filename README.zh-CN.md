@@ -12,6 +12,8 @@ URDF + TOML 转 USD 转换工具。在官方 urdf-usd-converter 基础上补充�
 
 详见 [SOURCE.md](SOURCE.md) 了解种子文件的来源与 layer 切分。
 
+种子代码的验证逻辑由 `devel-test` 内的 pytest 覆盖（`test/pytest/unit/test_sensor_validation.py`），`seed/` 出现语法错误会让构建失败。需要 Isaac Sim 的部分（`setup_sensor` 等）是参考代码，不在功能测试范围内。
+
 ## 许可证
 
 [Apache-2.0](LICENSE)

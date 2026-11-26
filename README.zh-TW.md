@@ -12,6 +12,8 @@ URDF + TOML 轉 USD 轉換工具。在官方 urdf-usd-converter 基礎上補充�
 
 詳見 [SOURCE.md](SOURCE.md) 了解種子檔案的來源與 layer 切分。
 
+種子程式碼的驗證邏輯由 `devel-test` 內的 pytest 涵蓋（`test/pytest/unit/test_sensor_validation.py`），`seed/` 出現語法錯誤會讓建置失敗。需要 Isaac Sim 的部分（`setup_sensor` 等）是參考程式碼，不在功能測試範圍內。
+
 ## 授權條款
 
 [Apache-2.0](LICENSE)
