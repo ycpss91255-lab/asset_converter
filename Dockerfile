@@ -334,8 +334,10 @@ RUN python3 -m venv /opt/venv \
     && /opt/venv/bin/pip install --no-cache-dir -r /tmp/pytest-requirements.txt
 ENV PATH="/opt/venv/bin:${PATH}" \
     PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONPATH=/pytest_pkg
+    PYTHONPATH=/pytest_pkg:/pytest_seed
 COPY asset_converter/ /pytest_pkg/asset_converter/
+# seed/ is reference code, host-importable (no Isaac); covered by pytest.
+COPY seed/ /pytest_seed/
 COPY test/pytest/ /pytest_test/
 
 ARG USER

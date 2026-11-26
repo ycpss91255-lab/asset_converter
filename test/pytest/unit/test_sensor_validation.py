@@ -1,4 +1,4 @@
-"""Unit tests for isaac_devkit.sensors (former sensor_setup.py) —
+"""Unit tests for seed/sensors_prim.py (former isaac_devkit.sensors) —
 host-runnable, no Isaac Sim required.
 
 Tests cover: YAML loading, shared validation (mount/ros), category dispatch,
@@ -12,8 +12,9 @@ from pathlib import Path
 import pytest
 import yaml
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "framework"))
-from isaac_devkit import sensors as sensor_setup
+# seed/ is on PYTHONPATH in the devel-test stage (Dockerfile); the module is
+# the former isaac_devkit.sensors, host-importable without Isaac Sim.
+import sensors_prim as sensor_setup
 
 
 @pytest.fixture
@@ -399,7 +400,7 @@ class TestEnableExtensions:
         with pytest.raises(RuntimeError, match="isaacsim.ros2.bridge"):
             sensor_setup._enable_extensions("isaacsim.ros2.bridge")
 
-    def test_no_deprecated_core_utils_import_in_framework(self):
+    def test_no_deprecated_core_utils_import_in_seed(self):
         # Static guard over the whole package: the lidar / IMU setup paths
         # need a live stage, so pin the absence of the import instead.
         import ast
@@ -417,3 +418,14 @@ class TestEnableExtensions:
                     if name.startswith("isaacsim.core.utils"):
                         offenders.append(f"{path.name}:{node.lineno} {name}")
         assert offenders == []
+
+
+class TestSeedCompiles:
+    def test_every_seed_py_file_compiles(self):
+        # A syntax error in any seed file must turn the gate red, including
+        # files the tests above never import.
+        seed = Path(sensor_setup.__file__).resolve().parent
+        files = sorted(seed.rglob("*.py"))
+        assert files, f"no seed python files under {seed}"
+        for path in files:
+            compile(path.read_text(encoding="utf-8"), str(path), "exec")

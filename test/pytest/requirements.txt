@@ -3,3 +3,5 @@
 # separately, a mismatched usd-core breaks the converter's usdex import.
 urdf-usd-converter==0.4.0
 pytest>=8,<9
+# seed/sensors_prim.py loads sensor configs with yaml.
+PyYAML>=6,<7
