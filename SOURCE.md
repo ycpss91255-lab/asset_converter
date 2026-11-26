@@ -2,10 +2,12 @@
 
 Seed code extracted from ycpss91255-lab/isaac @ c068e3a.
 
+The seed validation logic is pure Python (no Isaac Sim needed). Its tests live in `test/pytest/unit/test_sensor_validation.py` and run in `devel-test`; a syntax error in any `seed/**/*.py` fails the gate. The Isaac-side setup functions (`setup_sensor` etc.) are not exercised.
+
 | Seed file | Origin |
 |-----------|--------|
 | seed/sensors_prim.py | framework/isaac_devkit/sensors.py (full 756 lines) |
-| seed/test/test_sensor_validation.py | test/unit/pytest/test_sensor_setup.py |
+| test/pytest/unit/test_sensor_validation.py | test/unit/pytest/test_sensor_setup.py |
 
 This seed contains the full sensors.py including entangled OmniGraph code.
 Only the sensor-prim-creation layer belongs in asset_converter:
