@@ -158,3 +158,28 @@ def test_drives_applied(tmp_path):
     assert "PhysicsDriveAPI:angular" in joints[0].GetAppliedSchemas()
     drive = UsdPhysics.DriveAPI(joints[0], "angular")
     assert drive.GetMaxForceAttr().Get() == pytest.approx(10)
+
+
+def _output_layers(out):
+    """Every USD file the converter wrote (root, payload and sublayers)."""
+    files = sorted(
+        p for p in out.rglob("*")
+        if p.suffix in {".usd", ".usda", ".usdc"}
+    )
+    assert len(files) > 1, "expected root plus payload/sub layers"
+    return files
+
+
+def test_every_output_layer_authors_z_up_and_meter_units(tmp_path):
+    """Issue #44: upAxis=Z / metersPerUnit=1 explicitly authored (not defaults)."""
+    pkg, src = _make_package(tmp_path)
+    urdf = src / "r.urdf"
+    urdf.write_text(_pkg_urdf())
+    out = convert_urdf(urdf, tmp_path / "out", {"mycam_description": pkg})
+    for path in _output_layers(tmp_path / "out"):
+        stage = Usd.Stage.Open(str(path))
+        keys = stage.GetRootLayer().pseudoRoot.ListInfoKeys()
+        assert "upAxis" in keys and "metersPerUnit" in keys, path
+        assert UsdGeom.GetStageUpAxis(stage) == UsdGeom.Tokens.z, path
+        assert UsdGeom.GetStageMetersPerUnit(stage) == 1, path
+    assert out in _output_layers(tmp_path / "out")
