@@ -21,3 +21,19 @@ setup() {
 @test "bash is available on PATH" {
   assert_cmd_installed bash
 }
+
+@test "entrypoint.sh exec's its command and returns success" {
+  run /entrypoint.sh true
+  assert_success
+}
+
+@test "entrypoint.sh propagates the exit status of its command" {
+  run /entrypoint.sh sh -c "exit 7"
+  assert_failure 7
+}
+
+@test "entrypoint.sh passes arguments through to the command" {
+  run /entrypoint.sh printf '%s|' alpha "b c" delta
+  assert_success
+  assert_output "alpha|b c|delta|"
+}
