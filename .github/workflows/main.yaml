@@ -6,6 +6,8 @@ on:
     tags:
       - 'v*'
   pull_request:
+  merge_group:
+    types: [checks_requested]
   workflow_dispatch:
 
 # call-release uses softprops/action-gh-release@v2 which needs
@@ -23,6 +25,9 @@ jobs:
       image_name: asset_converter
       # CLI tool, no runtime image: the Dockerfile has no runtime stage.
       build_runtime: false
+      # merge_group 事件沒有 head repo 資訊；merge queue 只有 maintainer 能排入，
+      # 視為同 repo 可信來源，build job 才不會被 fork guard 略過（base#1587）。
+      merge_group_same_repo: 'true'
 
   call-release:
     needs: call-docker-build
@@ -30,3 +35,26 @@ jobs:
     uses: ycpss91255-lab/base/.github/workflows/release-worker.yaml@v0.43.0-rc9
     with:
       archive_name_prefix: asset_converter
+
+  # merge queue 唯一的必要 check：只有 call-docker-build 成功才算通過。
+  # 之後新增必要 job 時加進 needs，ruleset 不必改。
+  ci-rollup:
+    name: ci-rollup
+    if: always()
+    needs: [call-docker-build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: 確認必要 job 全部成功
+        env:
+          NEEDS: ${{ toJSON(needs) }}
+        run: |
+          set -euo pipefail
+          echo "${NEEDS}" | jq -r 'to_entries[] | "\(.key): \(.value.result)"'
+          bad="$(echo "${NEEDS}" | jq -r '[to_entries[] | select(.value.result != "success") | .key] | join(", ")')"
+          if [ -n "${bad}" ]; then
+            echo "::error::未成功的 job：${bad}"
+            exit 1
+          fi
